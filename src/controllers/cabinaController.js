@@ -3,7 +3,15 @@ const eventoController = require('./eventoController');
 
 
 
-
+// Obtener todas las cabinas
+exports.obtenerCabinas = async (req, res) => {
+  try {
+    const cabinas = await Cabina.find();
+    res.json(cabinas);
+  } catch (error) {
+    res.status(500).json({ message: 'Error al obtener cabinas', error });
+  }
+};
 
 
 // Crear una cabina
@@ -31,6 +39,18 @@ exports.eliminarCabina = async (req, res) => {
     res.status(400).json({ message: 'Error al eliminar cabina', error });
   }
 };
+
+// Obtener una cabina por ID
+exports.obtenerCabinaPorId = async (req, res) => {
+  try {
+    const cabina = await Cabina.findById(req.params.id);
+    if (!cabina) return res.status(404).json({ message: 'Cabina no encontrada' });
+    res.json(cabina);
+  } catch (error) {
+    res.status(500).json({ message: 'Error al obtener cabina', error });
+  }
+};
+
 
 // Mover una cabina
 exports.moverCabina = async (req, res) => {
