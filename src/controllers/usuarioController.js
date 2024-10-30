@@ -3,15 +3,14 @@ const Cabina = require('../models/Cabina');
 
 // Crear un usuario (mantener este método sin cambios)
 exports.crearUsuario = async (req, res) => {
-  const { nombre, edad } = req.body;
-  try {
-    const nuevoUsuario = new Usuario({ nombre, edad });
-    await nuevoUsuario.save();
-    res.status(201).json(nuevoUsuario);
-  } catch (error) {
-    res.status(400).json({ message: 'Error al crear usuario', error });
-  }
-};
+    try {
+      const nuevoUsuario = new Usuario(req.body);
+      await nuevoUsuario.save();
+      res.status(201).json(nuevoUsuario);
+    } catch (error) {
+      res.status(500).json({ error: 'Error al crear el usuario' });
+    }
+  };
 
 // Solicitar un viaje en una cabina específica
 exports.solicitarViaje = async (req, res) => {

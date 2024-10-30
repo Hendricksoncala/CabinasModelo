@@ -8,11 +8,14 @@ const eventoController = require('./eventoController');
 
 // Crear una cabina
 exports.crearCabina = async (req, res) => {
-  const { id, capacidadMaxima } = req.body;
+  const { identificador, capacidadMaxima } = req.body; // Cambié `id` a `identificador`
   try {
-    const nuevaCabina = new Cabina({ id, capacidadMaxima });
+    const nuevaCabina = new Cabina({ identificador, capacidadMaxima });
     await nuevaCabina.save();
     res.status(201).json(nuevaCabina);
+
+    console.log(req.body);
+
   } catch (error) {
     res.status(400).json({ message: 'Error al crear cabina', error });
   }

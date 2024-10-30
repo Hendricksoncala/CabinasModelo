@@ -1,10 +1,19 @@
 const Evento = require('../models/Evento');
+const { enviarAlerta } = require('../../index');  // Importar función de alerta
 
 // Registrar un evento crítico
 exports.registrarEvento = async (tipo, descripcion, cabinaId) => {
   try {
     const nuevoEvento = new Evento({ tipo, descripcion, cabinaId });
     await nuevoEvento.save();
+
+    // Enviar alerta a través de WebSocket
+    enviarAlerta({
+      tipo,
+      descripcion,
+      cabinaId,
+      fecha: nuevoEvento.fecha
+    });
   } catch (error) {
     console.error('Error al registrar el evento:', error);
   }
